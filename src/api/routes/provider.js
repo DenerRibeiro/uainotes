@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 
-const { findAll } = require('../../api/controllers/providerServices');
+const {
+  findAll,
+  create,
+} = require('../../api/controllers/providerServices');
 
-router.route('/').get(findAll);
+router.route('/').get(findAll).post(create);
 
 module.exports = router;
