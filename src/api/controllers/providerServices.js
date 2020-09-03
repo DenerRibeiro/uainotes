@@ -1,4 +1,4 @@
-const providerDao = require('../../database/dao/providerDao');
+const providerDao = require('../../database/dao/generalDao');
 const Provider = require('../../models/Provider');
 const models = require('../../models/index');
 const asyncHandler = require('../../../helpers/asyncHandler');
@@ -8,7 +8,7 @@ const ErrorResponse = require('../../../helpers/ErrorResponse');
 //@dec      Create new provider
 //@route    POST /api/v1/providers
 //@access   Private
-exports.create = asyncHandler(async (req, res) => {
+exports.createProvider = asyncHandler(async (req, res, next) => {
   const obj = req.body;
 
   obj.createdAt = new Date(Date.now());
@@ -16,10 +16,7 @@ exports.create = asyncHandler(async (req, res) => {
 
   console.log(obj);
 
-  const result = await providerDao.createProvider(
-    models.Provider,
-    obj
-  );
+  const result = await providerDao.create(models.Provider, obj);
   if (!result) {
     throw new ErrorResponse(500, result);
   }
@@ -32,8 +29,8 @@ exports.create = asyncHandler(async (req, res) => {
 //@dec      Get all providers
 //@route    GET /api/v1/providers
 //@access   Public
-exports.findAll = asyncHandler(async (req, res) => {
-  const result = await providerDao.getProviders(models.Provider);
+exports.findAllProviders = asyncHandler(async (req, res) => {
+  const result = await providerDao.findAll(models.Provider);
 
   if (!result) {
     throw new ErrorResponse(404, result);
@@ -48,8 +45,8 @@ exports.findAll = asyncHandler(async (req, res) => {
 //@dec      Get one  providers
 //@route    GET /api/v1/providers
 //@access   Public
-exports.findAll = asyncHandler(async (req, res) => {
-  const result = await providerDao.getProviders(models.Provider);
+exports.findOneProvider = asyncHandler(async (req, res) => {
+  const result = await providerDao.getOne(models.Provider);
   if (!result) {
     throw new ErrorResponse(404, result);
   }

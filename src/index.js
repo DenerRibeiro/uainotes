@@ -1,7 +1,7 @@
 const Provider = require('./models/Provider');
 const express = require('express');
 const dotenv = require('dotenv');
-const providerDao = require('./database/dao/providerDao');
+const providerDao = require('./database/dao/generalDao');
 const models = require('./models/index');
 const bodyParser = require('body-parser');
 
