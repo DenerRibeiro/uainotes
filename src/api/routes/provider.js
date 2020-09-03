@@ -7,5 +7,6 @@ const {
 } = require('../../api/controllers/providerServices');
 
 router.route('/').get(findAll).post(create);
+// router.route('/:id').get(findProvider);
 
 module.exports = router;
