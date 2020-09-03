@@ -1,6 +1,11 @@
-const { Provider } = require('./models');
+const Provider = require('./models/Provider');
 const express = require('express');
 const dotenv = require('dotenv');
+const providerDao = require('./database/dao/providerDao');
+const models = require('./models/index');
+
+//Get route files
+const providers = require('./api/routes/provider');
 
 dotenv.config({ path: './api/config/config' });
 
@@ -8,15 +13,12 @@ const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-  res.send('hello');
-});
+//mount routes
+app.use('/api/v1/providers', providers);
 
-// console.log(process.env.DB_ROOT_PASSWORD);
-
-Provider.create({
-  name: 'José Maria Ribeiro',
-  address: 'Ribeirão das Pedras',
+providerDao.createProvider(models.Provider, {
+  name: 'Diego Marques Ribeiro',
+  address: 'Villa',
   createdAt: new Date(Date.now()),
   updatedAt: new Date(Date.now()),
 });
