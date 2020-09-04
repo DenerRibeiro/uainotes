@@ -6,7 +6,7 @@ const path = require('path');
 
 //@func create a provider
 exports.create = async (model, object) => {
-  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `create ${model.name}`;
   try {
     const result = await model.findOrCreate({
@@ -22,7 +22,7 @@ exports.create = async (model, object) => {
 
 //@func get providers
 exports.findAll = async (model) => {
-  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `findAll ${model.name}`;
   try {
     const result = await model.findAll();
@@ -30,20 +30,21 @@ exports.findAll = async (model) => {
     return result;
   } catch (e) {
     logHandler.failure(logFilePath, action, e);
-    return result;
+    return e;
   }
 };
 
 //@func get a procider by Id
 exports.findOne = async (model, id) => {
-  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `findOne ${model.name} id=${id}`;
+
   try {
-    const result = this.findById(model, id);
+    const result = model.findByPk(id);
     logHandler.success(logFilePath, action);
     return result;
   } catch (e) {
     logHandler.failure(logFilePath, action, e);
-    return result;
+    return e;
   }
 };

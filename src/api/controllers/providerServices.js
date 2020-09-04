@@ -18,6 +18,10 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
 
   const result = await providerDao.create(models.Provider, obj);
   if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
     throw new ErrorResponse(500, result);
   }
   res.status(201).json({
@@ -33,6 +37,10 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
   const result = await providerDao.findAll(models.Provider);
 
   if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
     throw new ErrorResponse(404, result);
   }
 
@@ -46,8 +54,16 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers
 //@access   Public
 exports.findOneProvider = asyncHandler(async (req, res) => {
-  const result = await providerDao.findOne(models.Provider);
+  const result = await providerDao.findOne(
+    models.Provider,
+    req.params.id
+  );
+
   if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
     throw new ErrorResponse(404, result);
   }
 
