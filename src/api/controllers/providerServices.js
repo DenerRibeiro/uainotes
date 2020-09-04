@@ -46,7 +46,7 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers
 //@access   Public
 exports.findOneProvider = asyncHandler(async (req, res) => {
-  const result = await providerDao.getOne(models.Provider);
+  const result = await providerDao.findOne(models.Provider);
   if (!result) {
     throw new ErrorResponse(404, result);
   }
