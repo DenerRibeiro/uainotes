@@ -19,6 +19,37 @@ exports.create = async (model, object) => {
   }
 };
 
+exports.update = async (model, object, id) => {
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const action = `update ${model.name} id=${id}`;
+
+  try {
+    const result = model.update(object, {
+      where: { id: id },
+    });
+    logHandler.success(logFilePath, action);
+    return result;
+  } catch (e) {
+    logHandler.failure(logFilePath, action, e);
+    return e;
+  }
+};
+
+exports.delete = async (model, id) => {
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const action = `delete ${model.name} id=${id}`;
+  try {
+    const result = model.destroy({
+      where: { id },
+    });
+    logHandler.success(logFilePath, action);
+    return result;
+  } catch (e) {
+    logHandler.failure(logFilePath, action, e);
+    return e;
+  }
+};
+
 exports.findAll = async (model) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `findAll ${model.name}`;
@@ -38,22 +69,6 @@ exports.findOne = async (model, id) => {
 
   try {
     const result = model.findByPk(id);
-    logHandler.success(logFilePath, action);
-    return result;
-  } catch (e) {
-    logHandler.failure(logFilePath, action, e);
-    return e;
-  }
-};
-
-exports.update = async (model, object, id) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
-  const action = `update ${model.name} id=${id}`;
-
-  try {
-    const result = model.update(object, {
-      where: { id: id },
-    });
     logHandler.success(logFilePath, action);
     return result;
   } catch (e) {

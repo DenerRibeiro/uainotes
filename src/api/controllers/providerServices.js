@@ -30,6 +30,56 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
   });
 });
 
+//@dec      Update a providers
+//@route    UPDATE /api/v1/providers/:id
+//@access   User
+exports.updateProvider = asyncHandler(async (req, res) => {
+  const result = await providerDao.update(
+    models.Provider,
+    // JSON.stringify(req.body),
+    req.body,
+    req.params.id
+  );
+
+  console.log(result);
+
+  if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
+    throw new ErrorResponse(404, result);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: result[0],
+  });
+});
+
+//@dec      Delete a providers
+//@route    DELETE /api/v1/providers/:id
+//@access   User
+exports.deleteProvider = asyncHandler(async (req, res) => {
+  const result = await providerDao.delete(
+    models.Provider,
+    req.params.id
+  );
+
+  if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
+    throw new ErrorResponse(404, result);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
+
 //@dec      Get all providers
 //@route    GET /api/v1/providers
 //@access   Public
@@ -70,32 +120,5 @@ exports.findOneProvider = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: result,
-  });
-});
-
-//@dec      Update a providers
-//@route    UPDATE /api/v1/providers
-//@access   User
-exports.updateProvider = asyncHandler(async (req, res) => {
-  const result = await providerDao.update(
-    models.Provider,
-    // JSON.stringify(req.body),
-    req.body,
-    req.params.id
-  );
-
-  console.log(result);
-
-  if (!result) {
-    res.status(404).json({
-      success: false,
-      data: {},
-    });
-    throw new ErrorResponse(404, result);
-  }
-
-  res.status(200).json({
-    success: true,
-    data: result[0],
   });
 });

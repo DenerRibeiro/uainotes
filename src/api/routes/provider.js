@@ -6,9 +6,14 @@ const {
   createProvider,
   findOneProvider,
   updateProvider,
+  deleteProvider,
 } = require('../../api/controllers/providerServices');
 
 router.route('/').get(findAllProviders).post(createProvider);
-router.route('/:id').get(findOneProvider).put(updateProvider);
+router
+  .route('/:id')
+  .get(findOneProvider)
+  .put(updateProvider)
+  .delete(deleteProvider);
 
 module.exports = router;
