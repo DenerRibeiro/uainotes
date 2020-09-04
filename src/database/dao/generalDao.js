@@ -4,7 +4,6 @@ const ErrorResponse = require('../../../helpers/ErrorResponse');
 const logHandler = require('../../../helpers/logHandler');
 const path = require('path');
 
-//@func create a provider
 exports.create = async (model, object) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `create ${model.name}`;
@@ -20,7 +19,6 @@ exports.create = async (model, object) => {
   }
 };
 
-//@func get providers
 exports.findAll = async (model) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `findAll ${model.name}`;
@@ -34,13 +32,28 @@ exports.findAll = async (model) => {
   }
 };
 
-//@func get a procider by Id
 exports.findOne = async (model, id) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
   const action = `findOne ${model.name} id=${id}`;
 
   try {
     const result = model.findByPk(id);
+    logHandler.success(logFilePath, action);
+    return result;
+  } catch (e) {
+    logHandler.failure(logFilePath, action, e);
+    return e;
+  }
+};
+
+exports.update = async (model, object, id) => {
+  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const action = `update ${model.name} id=${id}`;
+
+  try {
+    const result = model.update(object, {
+      where: { id: id },
+    });
     logHandler.success(logFilePath, action);
     return result;
   } catch (e) {

@@ -17,7 +17,7 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
   console.log(obj);
 
   const result = await providerDao.create(models.Provider, obj);
-  if (!result) {
+  if (!result[1]) {
     res.status(404).json({
       success: false,
       data: {},
@@ -52,7 +52,7 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 
 //@dec      Get one  providers
 //@route    GET /api/v1/providers
-//@access   Public
+//@access   User
 exports.findOneProvider = asyncHandler(async (req, res) => {
   const result = await providerDao.findOne(
     models.Provider,
@@ -70,5 +70,32 @@ exports.findOneProvider = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: result,
+  });
+});
+
+//@dec      Update a providers
+//@route    UPDATE /api/v1/providers
+//@access   User
+exports.updateProvider = asyncHandler(async (req, res) => {
+  const result = await providerDao.update(
+    models.Provider,
+    // JSON.stringify(req.body),
+    req.body,
+    req.params.id
+  );
+
+  console.log(result);
+
+  if (!result) {
+    res.status(404).json({
+      success: false,
+      data: {},
+    });
+    throw new ErrorResponse(404, result);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: result[0],
   });
 });
