@@ -1,12 +1,10 @@
-const Provider = require('./models/Provider');
 const express = require('express');
 const dotenv = require('dotenv');
-const providerDao = require('./database/dao/generalDao');
-const models = require('./models/index');
 const bodyParser = require('body-parser');
 
 //Get route files
-const providers = require('./api/routes/provider');
+const provider = require('./api/routes/provider');
+const product = require('./api/routes/product');
 
 dotenv.config({ path: './api/config/config' });
 
@@ -17,14 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //mount routes
-app.use('/api/v1/providers', providers);
-
-// providerDao.createProvider(models.Provider, {
-//   "name": "Diego Marques Ribeiro",
-//   "address": "Villa",
-//   createdAt: new Date(Date.now()),
-//   updatedAt: new Date(Date.now()),
-// });
+app.use('/api/v1/providers', provider);
+app.use('/api/v1/products', product);
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!');

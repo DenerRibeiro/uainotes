@@ -1,19 +1,20 @@
 const generalDao = require('../../database/dao/generalDao');
-const { Provider } = require('../../models');
+const { Product } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/ErrorResponse');
 
-//@dec      Create new provider
-//@route    POST /api/v1/providers
-//@access   Private
-exports.createProvider = asyncHandler(async (req, res, next) => {
+//@dec      Create new product
+//@route    POST /api/v1/product
+//@access   User
+exports.createProduct = asyncHandler(async (req, res) => {
   const obj = req.body;
 
   obj.createdAt = new Date(Date.now());
   obj.updatedAt = new Date(Date.now());
 
-  const result = await generalDao.create(Provider, obj);
-  if (!result[1]) {
+  const result = await generalDao.create(Product, obj);
+
+  if (!result) {
     res.status(404).json({
       success: false,
       data: {},
@@ -26,13 +27,12 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
   });
 });
 
-//@dec      Update a providers
-//@route    UPDATE /api/v1/providers/:id
+//@dec      Update a product
+//@route    UPDATE /api/v1/products/:id
 //@access   User
-exports.updateProvider = asyncHandler(async (req, res) => {
+exports.updateProduct = asyncHandler(async (req, res) => {
   const result = await generalDao.update(
-    Provider,
-    // JSON.stringify(req.body),
+    Product,
     req.body,
     req.params.id
   );
@@ -53,11 +53,11 @@ exports.updateProvider = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Delete a providers
-//@route    DELETE /api/v1/providers/:id
+//@dec      Delete a product
+//@route    DELETE /api/v1/products/:id
 //@access   User
-exports.deleteProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.delete(Provider, req.params.id);
+exports.deleteProduct = asyncHandler(async (req, res) => {
+  const result = await generalDao.delete(Product, req.params.id);
 
   if (!result) {
     res.status(404).json({
@@ -73,12 +73,11 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Get all providers
-//@route    GET /api/v1/providers
+//@dec      Get all products
+//@route    GET /api/v1/products
 //@access   User
-exports.findAllProviders = asyncHandler(async (req, res) => {
-  const result = await generalDao.findAll(Provider);
-  // console.log(models.Provider);
+exports.findAllProducts = asyncHandler(async (req, res) => {
+  const result = await generalDao.findAll(Product);
 
   if (!result) {
     res.status(404).json({
@@ -94,11 +93,11 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Get one  provider
-//@route    GET /api/v1/providers:id
+//@dec      Get one  product
+//@route    GET /api/v1/products/:id
 //@access   User
-exports.findOneProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.findOne(Provider, req.params.id);
+exports.findOneProduct = asyncHandler(async (req, res) => {
+  const result = await generalDao.findOne(Product, req.params.id);
 
   if (!result) {
     res.status(404).json({

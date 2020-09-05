@@ -10,6 +10,7 @@ const {
 } = require('../../api/controllers/providerServices');
 
 router.route('/').get(findAllProviders).post(createProvider);
+
 router
   .route('/:id')
   .get(findOneProvider)

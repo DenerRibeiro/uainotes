@@ -1,16 +1,18 @@
-const { response } = require('express');
-const asyncHandler = require('../../../helpers/asyncHandler');
-const ErrorResponse = require('../../../helpers/ErrorResponse');
 const logHandler = require('../../../helpers/logHandler');
 const path = require('path');
 
 exports.create = async (model, object) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  console.log(model);
   const action = `create ${model.name}`;
   try {
-    const result = await model.findOrCreate({
-      where: { name: object.name, address: object.address },
+    const find = await model.findOne({
+      where: { name: object.name },
     });
+
+    if (find) return false;
+
+    const result = await model.create(object);
     logHandler.success(logFilePath, action);
     return result;
   } catch (e) {
