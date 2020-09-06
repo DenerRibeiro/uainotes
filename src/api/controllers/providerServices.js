@@ -2,6 +2,7 @@ const generalDao = require('../../database/dao/generalDao');
 const { Provider } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/ErrorResponse');
+const { errors } = require('../../../helpers/errors/errorCodes');
 
 //@dec      Create new provider
 //@route    POST /api/v1/providers
@@ -18,7 +19,7 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(500, result);
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PROVIDER, result);
   }
   res.status(201).json({
     success: true,
@@ -44,7 +45,7 @@ exports.updateProvider = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PROVIDER, result);
   }
 
   res.status(200).json({
@@ -64,7 +65,7 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
   }
 
   res.status(200).json({
@@ -85,7 +86,7 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.EMPTY_LIST, result);
   }
 
   res.status(200).json({
@@ -105,7 +106,7 @@ exports.findOneProvider = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(erros.COULD_NOT_FIND_PROVIDER, result);
   }
 
   res.status(200).json({

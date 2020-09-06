@@ -2,6 +2,7 @@ const generalDao = require('../../database/dao/generalDao');
 const { Product } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/ErrorResponse');
+const { errors } = require('../../../helpers/errors/errorCodes');
 
 //@dec      Create new product
 //@route    POST /api/v1/product
@@ -19,7 +20,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(500, result);
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PRODUCT, result);
   }
   res.status(201).json({
     success: true,
@@ -31,11 +32,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
 //@route    UPDATE /api/v1/products/:id
 //@access   User
 exports.updateProduct = asyncHandler(async (req, res) => {
-  const result = await generalDao.update(
-    Product,
-    req.body,
-    req.params.id
-  );
+  const result = await generalDao.update(Product, req.body, req.params.id);
 
   console.log(result);
 
@@ -44,7 +41,7 @@ exports.updateProduct = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PRODUCT, result);
   }
 
   res.status(200).json({
@@ -64,7 +61,7 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PRODUCT, result);
   }
 
   res.status(200).json({
@@ -84,7 +81,7 @@ exports.findAllProducts = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.EMPTY_LIST, result);
   }
 
   res.status(200).json({
@@ -104,7 +101,7 @@ exports.findOneProduct = asyncHandler(async (req, res) => {
       success: false,
       data: {},
     });
-    throw new ErrorResponse(404, result);
+    throw new ErrorResponse(errors.COULD_NOT_FIND_PRODUCT, result);
   }
 
   res.status(200).json({
