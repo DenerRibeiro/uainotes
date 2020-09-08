@@ -4,15 +4,15 @@ const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
 
 exports.create = async (model, object) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
   const action = `create ${model.name}`;
   try {
-    const find = await model.findOne({
-      where: { name: object.name },
-    });
-
-    if (find) throw new ErrorResponse(errors.ALREADY_EXISTS);
-
+    if (model.name !== 'Payments') {
+      const find = await model.findOne({
+        where: { name: object.name },
+      });
+      if (find) throw new ErrorResponse(errors.ALREADY_EXISTS);
+    }
     const result = await model.create(object);
     logHandler.success(logFilePath, action);
     return result;
@@ -23,7 +23,8 @@ exports.create = async (model, object) => {
 };
 
 exports.update = async (model, object, id) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+
   const action = `update ${model.name} id=${id}`;
 
   try {
@@ -39,7 +40,8 @@ exports.update = async (model, object, id) => {
 };
 
 exports.delete = async (model, id) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+
   const action = `delete ${model.name} id=${id}`;
   try {
     const result = model.destroy({
@@ -54,7 +56,8 @@ exports.delete = async (model, id) => {
 };
 
 exports.findAll = async (model) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+
   const action = `findAll ${model.name}`;
   try {
     const result = await model.findAll();
@@ -67,7 +70,8 @@ exports.findAll = async (model) => {
 };
 
 exports.findOne = async (model, id) => {
-  const logFilePath = path.join(__dirname, '../../logs/dao.log');
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+
   const action = `findOne ${model.name} id=${id}`;
 
   try {

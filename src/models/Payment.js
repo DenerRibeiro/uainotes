@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.FLOAT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
+    date: {
+      allowNull: false,
+      type: DataTypes.DATEONLY,
+    },
     productId: {
       allowNull: false,
       type: DataTypes.INTEGER,

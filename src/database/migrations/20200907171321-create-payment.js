@@ -10,6 +10,10 @@ module.exports = {
         autoIncrement: true,
         type: DataTypes.INTEGER,
       },
+      date: {
+        allowNull: false,
+        type: DataTypes.DATEONLY,
+      },
       amount: {
         allowNull: false,
         type: DataTypes.FLOAT,
