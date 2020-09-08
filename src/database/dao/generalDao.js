@@ -1,16 +1,17 @@
 const logHandler = require('../../../helpers/logHandler');
 const path = require('path');
+const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
+const errors = require('../../../helpers/errors/errorCodes');
 
 exports.create = async (model, object) => {
   const logFilePath = path.join(__dirname, '../../logs/dao.log');
-  console.log(model);
   const action = `create ${model.name}`;
   try {
     const find = await model.findOne({
       where: { name: object.name },
     });
 
-    if (find) return false;
+    if (find) throw new ErrorResponse(errors.ALREADY_EXISTS);
 
     const result = await model.create(object);
     logHandler.success(logFilePath, action);

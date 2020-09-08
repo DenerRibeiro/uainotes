@@ -14,7 +14,7 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
   obj.updatedAt = new Date(Date.now());
 
   const result = await generalDao.create(Provider, obj);
-  if (!result[1]) {
+  if (!result) {
     res.status(404).json({
       success: false,
       data: errors.COULD_NOT_CREATE_PROVIDER,

@@ -5,5 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: DataTypes.DATE,
   });
 
+  Product.associate = function associate(models) {
+    Product.hasMany(models.Payments, { as: 'payment', foreignKey: 'productId' });
+  };
   return Product;
 };

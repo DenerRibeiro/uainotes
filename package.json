@@ -4,7 +4,7 @@
   "description": "uai_services_api",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index"
+    "dev": "nodemon src/index.js"
   },
   "author": "Dener",
   "license": "ISC",
