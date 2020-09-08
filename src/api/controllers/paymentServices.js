@@ -1,5 +1,5 @@
 const generalDao = require('../../database/dao/generalDao');
-const { Payments } = require('../../models');
+const { Payment } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
@@ -12,7 +12,7 @@ exports.createPayment = asyncHandler(async (req, res) => {
 
   obj.date = obj.date.split('/').reverse().join('-');
 
-  const result = await generalDao.create(Payments, obj);
+  const result = await generalDao.create(Payment, obj);
 
   if (!result) {
     res.status(404).json({
@@ -31,7 +31,7 @@ exports.createPayment = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/payments
 //@access   User
 exports.findAllPayments = asyncHandler(async (req, res) => {
-  const result = await generalDao.findAll(Payments);
+  const result = await generalDao.findAll(Payment);
 
   if (!result) {
     res.status(404).json({

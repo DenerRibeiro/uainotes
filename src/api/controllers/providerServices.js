@@ -76,7 +76,6 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
 //@access   User
 exports.findAllProviders = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Provider);
-  console.log(result);
 
   if (!result) {
     res.status(404).json({

@@ -73,7 +73,7 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 exports.findAllProducts = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Product);
 
-  if (!result.length > 0) {
+  if (result.length) {
     res.status(404).json({
       success: false,
       data: errors.NOT_FOUND,

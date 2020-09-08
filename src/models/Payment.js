@@ -1,20 +1,32 @@
 module.exports = (sequelize, DataTypes) => {
-  const Payment = sequelize.define('Payments', {
-    amount: DataTypes.FLOAT,
-    price: DataTypes.FLOAT,
+  const Payment = sequelize.define('Payment', {
+    paymentId: {
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+    },
     date: {
       allowNull: false,
       type: DataTypes.DATEONLY,
     },
+    amount: {
+      allowNull: false,
+      type: DataTypes.FLOAT,
+    },
+    price: {
+      allowNull: false,
+      type: DataTypes.FLOAT,
+    },
     productId: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      references: { model: 'Product', key: 'id' },
+      references: { model: 'Products', key: 'productId' },
     },
     providerId: {
       allowNull: false,
       type: DataTypes.INTEGER,
-      references: { model: 'Provider', key: 'id' },
+      references: { model: 'Providers', key: 'providerId' },
     },
     createdAt: {
       allowNull: false,
@@ -25,10 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
     },
   });
-
-  Payment.associate = function associate(models) {
-    Payment.belongsTo(models.Product, { foreignKey: 'productId', as: 'product' });
-  };
 
   return Payment;
 };
