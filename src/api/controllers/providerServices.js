@@ -10,9 +10,6 @@ const errors = require('../../../helpers/errors/errorCodes');
 exports.createProvider = asyncHandler(async (req, res, next) => {
   const obj = req.body;
 
-  // obj.createdAt = new Date(Date.now());
-  // obj.updatedAt = new Date(Date.now());
-
   const result = await generalDao.create(Provider, obj);
   if (!result) {
     res.status(404).json({

@@ -10,9 +10,6 @@ const errors = require('../../../helpers/errors/errorCodes');
 exports.createProduct = asyncHandler(async (req, res) => {
   const obj = req.body;
 
-  // obj.createdAt = new Date(Date.now());
-  // obj.updatedAt = new Date(Date.now());
-
   const result = await generalDao.create(Product, obj);
 
   if (!result) {
