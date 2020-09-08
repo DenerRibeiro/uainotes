@@ -10,11 +10,7 @@ const errors = require('../../../helpers/errors/errorCodes');
 exports.createPayment = asyncHandler(async (req, res) => {
   const obj = req.body;
 
-  let date = obj.date.split('/');
-  obj.date = date[2] + '-' + date[0] + '-' + date[1];
-
-  obj.createdAt = new Date(Date.now());
-  obj.updatedAt = new Date(Date.now());
+  obj.date = obj.date.split('/').reverse().join('-');
 
   const result = await generalDao.create(Payments, obj);
 

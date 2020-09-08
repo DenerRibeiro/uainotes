@@ -1,8 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
     name: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
   });
 
   Product.associate = function associate(models) {

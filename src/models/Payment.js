@@ -2,8 +2,6 @@ module.exports = (sequelize, DataTypes) => {
   const Payment = sequelize.define('Payments', {
     amount: DataTypes.FLOAT,
     price: DataTypes.FLOAT,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
     date: {
       allowNull: false,
       type: DataTypes.DATEONLY,
@@ -17,6 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
       references: { model: 'Provider', key: 'id' },
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
     },
   });
 

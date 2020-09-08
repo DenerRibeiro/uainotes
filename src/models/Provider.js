@@ -2,8 +2,14 @@ module.exports = (sequelize, DataTypes) => {
   const Provider = sequelize.define('Provider', {
     name: DataTypes.STRING,
     address: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
   });
 
   Provider.associate = function associate(models) {
