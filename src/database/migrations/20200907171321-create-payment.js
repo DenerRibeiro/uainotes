@@ -3,7 +3,7 @@ const DataTypes = require('sequelize/lib/data-types');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Payment', {
+    return queryInterface.createTable('Payments', {
       paymentId: {
         primaryKey: true,
         allowNull: false,

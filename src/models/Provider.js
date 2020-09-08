@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Provider = sequelize.define('Provider', {
+  const Provider = sequelize.define('Providers', {
     providerId: {
       allowNull: false,
       autoIncrement: true,
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Provider.associate = function associate(models) {
-    Provider.hasMany(models.Payment, { as: 'payment', foreignKey: 'providerId' });
+    Provider.hasMany(models.Payments, { as: 'payment', foreignKey: 'providerId' });
   };
 
   return Provider;
