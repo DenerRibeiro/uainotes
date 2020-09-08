@@ -1,12 +1,11 @@
 'use strict';
 
-const { query } = require('express');
 const DataTypes = require('sequelize/lib/data-types');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable('Providers', {
-      id: {
+      providerId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

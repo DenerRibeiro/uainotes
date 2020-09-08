@@ -1,5 +1,5 @@
 const generalDao = require('../../database/dao/generalDao');
-const { Product } = require('../../models');
+const { Products } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
@@ -10,7 +10,7 @@ const errors = require('../../../helpers/errors/errorCodes');
 exports.createProduct = asyncHandler(async (req, res) => {
   const obj = req.body;
 
-  const result = await generalDao.create(Product, obj);
+  const result = await generalDao.create(Products, obj);
 
   if (!result) {
     res.status(404).json({
@@ -29,7 +29,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
 //@route    UPDATE /api/v1/products/:id
 //@access   User
 exports.updateProduct = asyncHandler(async (req, res) => {
-  const result = await generalDao.update(Product, req.body, req.params.id);
+  const result = await generalDao.update(Products, req.body, req.params.id);
 
   console.log(result);
 
@@ -51,7 +51,7 @@ exports.updateProduct = asyncHandler(async (req, res) => {
 //@route    DELETE /api/v1/products/:id
 //@access   User
 exports.deleteProduct = asyncHandler(async (req, res) => {
-  const result = await generalDao.delete(Product, req.params.id);
+  const result = await generalDao.delete(Products, req.params.id);
 
   if (!result) {
     res.status(404).json({
@@ -71,9 +71,9 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/products
 //@access   User
 exports.findAllProducts = asyncHandler(async (req, res) => {
-  const result = await generalDao.findAll(Product);
+  const result = await generalDao.findAll(Products);
 
-  if (!result.length > 0) {
+  if (result.length) {
     res.status(404).json({
       success: false,
       data: errors.NOT_FOUND,
@@ -91,7 +91,7 @@ exports.findAllProducts = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/products/:id
 //@access   User
 exports.findOneProduct = asyncHandler(async (req, res) => {
-  const result = await generalDao.findOne(Product, req.params.id);
+  const result = await generalDao.findOne(Products, req.params.id);
 
   if (!result) {
     res.status(404).json({
