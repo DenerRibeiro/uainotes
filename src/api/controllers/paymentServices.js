@@ -69,8 +69,8 @@ exports.findAllPaymentsByProviderId = asyncHandler(async (req, res) => {
 //@dec      Get a payment by product id
 //@route    GET /api/v1/providers/:id/products
 //@access   User
-exports.findAllPaymentsByProviderId = asyncHandler(async (req, res) => {
-  const result = await paymentDao.findAllByProviderFk(Payments, req.params.id);
+exports.findAllPaymentsByProductId = asyncHandler(async (req, res) => {
+  const result = await paymentDao.findAllByProductFk(Payments, req.params.id);
 
   if (!result) {
     res.status(404).json({

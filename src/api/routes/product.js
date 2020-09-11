@@ -10,10 +10,10 @@ const {
 } = require('../controllers/productServices');
 
 //Get other route
-const paymentRouter = require('./payment');
+// const paymentRouter = require('./payment');
 
 //Re-route
-router.use('/:id/payments', paymentRouter);
+// router.use('/:id/payments', paymentRouter);
 
 router.route('/').get(findAllProducts).post(createProduct);
 

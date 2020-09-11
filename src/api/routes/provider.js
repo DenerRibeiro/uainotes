@@ -13,8 +13,8 @@ const {
 const paymentRouter = require('./payment');
 const productRouter = require('./product');
 
-//Re-route into other routes
-router.use('/:id/payments', paymentRouter);
+// //Re-route into other routes
+// router.use('/:id/payments', paymentRouter);
 
 router.route('/').get(findAllProviders).post(createProvider);
 
