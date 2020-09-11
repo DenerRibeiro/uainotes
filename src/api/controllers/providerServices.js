@@ -1,5 +1,5 @@
 const generalDao = require('../../database/dao/generalDao');
-const { Provider } = require('../../models');
+const { Providers } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
@@ -10,7 +10,7 @@ const errors = require('../../../helpers/errors/errorCodes');
 exports.createProvider = asyncHandler(async (req, res, next) => {
   const obj = req.body;
 
-  const result = await generalDao.create(Provider, obj);
+  const result = await generalDao.create(Providers, obj);
   if (!result) {
     res.status(404).json({
       success: false,
@@ -29,7 +29,7 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
 //@access   User
 exports.updateProvider = asyncHandler(async (req, res) => {
   const result = await generalDao.update(
-    Provider,
+    Providers,
     // JSON.stringify(req.body),
     req.body,
     req.params.id
@@ -55,7 +55,7 @@ exports.updateProvider = asyncHandler(async (req, res) => {
 //@route    DELETE /api/v1/providers/:id
 //@access   User
 exports.deleteProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.delete(Provider, req.params.id);
+  const result = await generalDao.delete(Providers, req.params.id);
 
   if (!result) {
     res.status(404).json({
@@ -75,7 +75,7 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers
 //@access   User
 exports.findAllProviders = asyncHandler(async (req, res) => {
-  const result = await generalDao.findAll(Provider);
+  const result = await generalDao.findAll(Providers);
 
   if (!result) {
     res.status(404).json({
@@ -94,7 +94,7 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers:id
 //@access   User
 exports.findOneProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.findOne(Provider, req.params.id);
+  const result = await generalDao.findOne(Providers, req.params.id);
 
   if (!result) {
     res.status(404).json({
