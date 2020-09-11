@@ -25,10 +25,12 @@ module.exports = {
       productId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: { model: 'Products', key: 'productId' },
       },
       providerId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        references: { model: 'Providers', key: 'providerId' },
       },
       createdAt: {
         allowNull: false,
