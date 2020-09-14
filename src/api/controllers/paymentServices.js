@@ -1,5 +1,4 @@
 const generalDao = require('../../database/dao/generalDao');
-const paymentDao = require('../../database/dao/paymentDao');
 const { Payments } = require('../../models');
 const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
@@ -53,7 +52,11 @@ exports.findAllPayments = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers/:id/payments
 //@access   User
 exports.findAllPaymentsByProviderId = asyncHandler(async (req, res) => {
-  const result = await paymentDao.findAllByProviderFk(Payments, req.params.id);
+  const { providerId } = req.params;
+
+  const result = await generalDao.findAllByFk(Payments, {
+    providerId,
+  });
 
   if (!result) {
     res.status(404).json({
@@ -72,7 +75,8 @@ exports.findAllPaymentsByProviderId = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers/:id/products
 //@access   User
 exports.findAllPaymentsByProductId = asyncHandler(async (req, res) => {
-  const result = await paymentDao.findAllByProductFk(Payments, req.params.id);
+  const { productId } = req.params;
+  const result = await generalDao.findAllByFk(Payments, { productId });
 
   if (!result) {
     res.status(404).json({

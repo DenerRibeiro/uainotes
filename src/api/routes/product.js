@@ -17,6 +17,10 @@ const {
 
 router.route('/').get(findAllProducts).post(createProduct);
 
-router.route('/:id').get(findOneProduct).put(updateProduct).delete(deleteProduct);
+router
+  .route('/:productId')
+  .get(findOneProduct)
+  .put(updateProduct)
+  .delete(deleteProduct);
 
 module.exports = router;

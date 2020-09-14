@@ -29,7 +29,7 @@ exports.update = async (model, object, id) => {
 
   try {
     const result = model.update(object, {
-      where: { id: id },
+      where: id,
     });
     logHandler.success(logFilePath, action);
     return result;
@@ -45,7 +45,7 @@ exports.delete = async (model, id) => {
   const action = `delete ${model.name} id=${id}`;
   try {
     const result = model.destroy({
-      where: { id },
+      where: id,
     });
     logHandler.success(logFilePath, action);
     return result;
@@ -81,5 +81,32 @@ exports.findOne = async (model, id) => {
   } catch (e) {
     logHandler.failure(logFilePath, action, e);
     return e;
+  }
+};
+
+exports.findAllByFk = async (model, fk) => {
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+  const action = `find all ${model.name} by fk=${fk}`;
+
+  try {
+    const result = model.findAll({ where: fk });
+    logHandler.success(logFilePath, action);
+    return result;
+  } catch (error) {
+    logHandler.failure(logHandler, action);
+    return error;
+  }
+};
+exports.findAllByFk = async (model, fk) => {
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+  const action = `find all ${model.name} by fk=${fk}`;
+
+  try {
+    const result = model.findAll({ where: fk });
+    logHandler.success(logFilePath, action);
+    return result;
+  } catch (error) {
+    logHandler.failure(logHandler, action);
+    return error;
   }
 };
