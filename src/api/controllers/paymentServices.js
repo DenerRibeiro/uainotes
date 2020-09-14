@@ -5,6 +5,8 @@ const asyncHandler = require('../../../helpers/asyncHandler');
 const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
 
+//this is a test comment
+
 //@dec      Create new payment
 //@route    POST /api/v1/payment
 //@access   User
