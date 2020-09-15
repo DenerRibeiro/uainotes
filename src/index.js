@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //mount routes
-app.use('/api/v1/providers', provider);
-app.use('/api/v1/products', product);
-app.use('/api/v1/payments', payment);
+app.use('/providers', provider);
+app.use('/products', product);
+app.use('/payments', payment);
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!');

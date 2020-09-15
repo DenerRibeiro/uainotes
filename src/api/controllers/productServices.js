@@ -11,6 +11,8 @@ exports.createProduct = asyncHandler(async (req, res) => {
   const obj = req.body;
 
   const result = await generalDao.create(Products, obj);
+  const { productId } = result.dataValues;
+  const { name } = result.dataValues;
 
   if (!result) {
     res.status(404).json({
@@ -21,7 +23,8 @@ exports.createProduct = asyncHandler(async (req, res) => {
   }
   res.status(201).json({
     success: true,
-    data: result,
+    productId,
+    name,
   });
 });
 
@@ -29,9 +32,13 @@ exports.createProduct = asyncHandler(async (req, res) => {
 //@route    UPDATE /api/v1/products/:id
 //@access   User
 exports.updateProduct = asyncHandler(async (req, res) => {
-  const { productId } = req.params;
+  let { productId } = req.params;
 
   const result = await generalDao.update(Products, req.body, { productId });
+  // console.log(result);
+
+  // productId = result[0].dataValues.productId;
+  // const { name } = result[0].dataValues;
 
   if (!result) {
     res.status(404).json({
@@ -43,7 +50,8 @@ exports.updateProduct = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    data: result[0],
+    // productId,
+    // name,
   });
 });
 

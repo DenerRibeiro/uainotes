@@ -28,7 +28,7 @@ exports.update = async (model, object, id) => {
   const action = `update ${model.name} id=${id}`;
 
   try {
-    const result = model.update(object, {
+    const result = await model.update(object, {
       where: id,
     });
     logHandler.success(logFilePath, action);
