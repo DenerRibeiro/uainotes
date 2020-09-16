@@ -18,6 +18,10 @@ const productRouter = require('./product');
 
 router.route('/').get(findAllProviders).post(createProvider);
 
-router.route('/:id').get(findOneProvider).put(updateProvider).delete(deleteProvider);
+router
+  .route('/:providerId')
+  .get(findOneProvider)
+  .put(updateProvider)
+  .delete(deleteProvider);
 
 module.exports = router;

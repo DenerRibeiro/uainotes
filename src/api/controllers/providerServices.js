@@ -7,7 +7,7 @@ const errors = require('../../../helpers/errors/errorCodes');
 //@dec      Create new provider
 //@route    POST /api/v1/providers
 //@access   Private
-exports.createProvider = asyncHandler(async (req, res, next) => {
+exports.createProvider = asyncHandler(async (req, res) => {
   const obj = req.body;
 
   const result = await generalDao.create(Providers, obj);
@@ -28,15 +28,8 @@ exports.createProvider = asyncHandler(async (req, res, next) => {
 //@route    UPDATE /api/v1/providers/:id
 //@access   User
 exports.updateProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.update(
-    Providers,
-    // JSON.stringify(req.body),
-    req.body,
-    req.params.id
-  );
-
-  console.log(result);
-
+  const { providerId } = req.params;
+  const result = await generalDao.update(Providers, req.body, { providerId });
   if (!result) {
     res.status(404).json({
       success: false,
@@ -55,7 +48,8 @@ exports.updateProvider = asyncHandler(async (req, res) => {
 //@route    DELETE /api/v1/providers/:id
 //@access   User
 exports.deleteProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.delete(Providers, req.params.id);
+  const { providerId } = req.params;
+  const result = await generalDao.delete(Providers, { providerId });
 
   if (!result) {
     res.status(404).json({
@@ -94,7 +88,8 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@route    GET /api/v1/providers:id
 //@access   User
 exports.findOneProvider = asyncHandler(async (req, res) => {
-  const result = await generalDao.findOne(Providers, req.params.id);
+  const { providerId } = req.params;
+  const result = await generalDao.findOne(Providers, { providerId });
 
   if (!result) {
     res.status(404).json({

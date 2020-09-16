@@ -3,9 +3,10 @@ const dotenv = require('dotenv');
 // dotenv.config({ path: './config' });
 
 module.exports = {
-  username: 'root',
+  username: 'uaiFrutas',
   password: 'Uai#2020',
-  database: 'crud_sequelize',
+  database: 'uaiservices',
   host: '127.0.0.1',
   dialect: 'mysql',
+  logging: false,
 };
