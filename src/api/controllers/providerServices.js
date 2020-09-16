@@ -89,7 +89,7 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@access   User
 exports.findOneProvider = asyncHandler(async (req, res) => {
   const { providerId } = req.params;
-  const result = await generalDao.findOne(Providers, { providerId });
+  const result = await generalDao.findOne(Providers, providerId);
 
   if (!result) {
     res.status(404).json({
