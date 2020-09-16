@@ -7,7 +7,12 @@ const db = {};
 const sequelize = new Sequelize(config);
 
 fs.readdirSync(__dirname)
-  .filter((file) => file.indexOf('.') !== 0 && file !== path.basename(__filename) && file.slice(-3) === '.js')
+  .filter(
+    (file) =>
+      file.indexOf('.') !== 0 &&
+      file !== path.basename(__filename) &&
+      file.slice(-3) === '.js'
+  )
   .forEach((file) => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize);
     db[model.name] = model;

@@ -1,16 +1,8 @@
 const chai = require('chai');
 const server = require('../src/index');
-// const Provider = require('../src/models/Provider');
-// const Product = require('../src/models/Product');
-// const Payment = require('../src/models/Payment');
-const { Product } = require('../src/models');
 const chaiHttp = require('chai-http');
 const should = chai.should();
-// const Chance = require('chance');
-// const chance = new Chance();
-
-// chai.use(chaiHttp);
-// let randName = chance.string();
+chai.use(chaiHttp);
 
 describe('Product', () => {
   let id = 0;
@@ -19,7 +11,6 @@ describe('Product', () => {
     const newProduct = {
       name: `PRODUTO`,
     };
-    console.log(newProduct.name);
     chai
       .request(server)
       .post('/products')
@@ -67,13 +58,13 @@ describe('Product', () => {
       });
   });
 
-  it('Delete Product', (done) => {
-    chai
-      .request(server)
-      .delete(`/products/${id}`)
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
-  });
+  // it('Delete Product', (done) => {
+  //   chai
+  //     .request(server)
+  //     .delete(`/products/${id}`)
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       done();
+  //     });
+  // });
 });
