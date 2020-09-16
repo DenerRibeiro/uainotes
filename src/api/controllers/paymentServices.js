@@ -7,7 +7,7 @@ const errors = require('../../../helpers/errors/errorCodes');
 //this is a test comment
 
 //@dec      Create new payment
-//@route    POST /api/v1/payment
+//@route    POST /payments
 //@access   User
 exports.createPayment = asyncHandler(async (req, res) => {
   const obj = req.body;
@@ -22,6 +22,12 @@ exports.createPayment = asyncHandler(async (req, res) => {
       data: errors.COULD_NOT_CREATE_PAYMENT,
     });
     throw new ErrorResponse(errors.COULD_NOT_CREATE_PAYMENT, result);
+  } else if (result.name === 'SequelizeValidationError') {
+    res.status(404).json({
+      success: false,
+      data: errors.COULD_NOT_CREATE_PAYMENT,
+    });
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PAYMENT, result);
   }
   res.status(201).json({
     success: true,
@@ -30,7 +36,7 @@ exports.createPayment = asyncHandler(async (req, res) => {
 });
 
 //@dec      Get all payments
-//@route    GET /api/v1/payments
+//@route    GET /payments
 //@access   User
 exports.findAllPayments = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Payments);
@@ -48,8 +54,8 @@ exports.findAllPayments = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Get a payment by provider id
-//@route    GET /api/v1/providers/:id/payments
+//@dec      Get all payment by provider id
+//@route    GET /providers/:id/payments
 //@access   User
 exports.findAllPaymentsByProviderId = asyncHandler(async (req, res) => {
   const { providerId } = req.params;
@@ -88,5 +94,25 @@ exports.findAllPaymentsByProductId = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: result,
+  });
+});
+
+//@dec      Delete a payment by id
+//@route    DELTE /payments/:id/
+//@access   User
+exports.deletePayment = asyncHandler(async (req, res) => {
+  const { paymentId } = req.params;
+  const result = await generalDao.delete(Payments, { paymentId });
+
+  if (!result) {
+    res.status(404).json({
+      success: false,
+      data: errors.NOT_FOUND,
+    });
+    throw new ErrorResponse(errors.NOT_FOUND, result);
+  }
+  res.status(200).json({
+    success: true,
+    data: {},
   });
 });
