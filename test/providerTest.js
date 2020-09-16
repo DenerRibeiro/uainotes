@@ -63,13 +63,13 @@ describe('Provider', () => {
       });
   });
 
-  // it('Delete Provider', (done) => {
-  //   chai
-  //     .request(server)
-  //     .delete(`/providers/${id}`)
-  //     .end((err, res) => {
-  //       res.should.have.status(200);
-  //       done();
-  //     });
-  // });
+  it('Delete Provider', (done) => {
+    chai
+      .request(server)
+      .delete(`/providers/${id}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
 });

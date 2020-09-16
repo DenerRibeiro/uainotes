@@ -58,13 +58,13 @@ describe('Product', () => {
       });
   });
 
-  // it('Delete Product', (done) => {
-  //   chai
-  //     .request(server)
-  //     .delete(`/products/${id}`)
-  //     .end((err, res) => {
-  //       res.should.have.status(200);
-  //       done();
-  //     });
-  // });
+  it('Delete Product', (done) => {
+    chai
+      .request(server)
+      .delete(`/products/${id}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
 });
