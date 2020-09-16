@@ -101,7 +101,7 @@ exports.findAllProducts = asyncHandler(async (req, res) => {
 //@access   User
 exports.findOneProduct = asyncHandler(async (req, res) => {
   const { productId } = req.params;
-  const result = await generalDao.findOne(Products, { productId });
+  const result = await generalDao.findOne(Products, productId);
 
   if (!result) {
     res.status(404).json({
