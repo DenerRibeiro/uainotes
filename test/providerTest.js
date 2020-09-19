@@ -12,7 +12,7 @@ describe('Provider', () => {
   let id = 0;
   it('Create Provider', (done) => {
     const newProvider = {
-      name: `PROVIDER2`,
+      name: `PROVIDER3`,
       address: 'PROVIDER ADDRESS',
     };
     chai
@@ -21,7 +21,7 @@ describe('Provider', () => {
       .set('content-type', 'application/json')
       .send(newProvider)
       .end((err, res) => {
-        id = res.body.data.providerId;
+        id = res.body.providerData.providerId;
         res.should.have.status(201);
         done();
       });

@@ -1,18 +1,11 @@
 const logHandler = require('../../../helpers/logHandler');
 const path = require('path');
-const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
-const errors = require('../../../helpers/errors/errorCodes');
+
 
 exports.create = async (model, object) => {
   const logFilePath = path.join(__dirname, '../../../logs/dao.log');
   const action = `create ${model.name}`;
   try {
-    if (model.name !== 'Payments') {
-      const find = await model.findOne({
-        where: { name: object.name },
-      });
-      if (find) throw new ErrorResponse(errors.ALREADY_EXISTS);
-    }
     const result = await model.create(object);
     logHandler.success(logFilePath, action);
     return result;
@@ -25,7 +18,7 @@ exports.create = async (model, object) => {
 exports.update = async (model, object, id) => {
   const logFilePath = path.join(__dirname, '../../../logs/dao.log');
 
-  const action = `update ${model.name} id=${id}`;
+  const action = `update ${model.name} id=${id.providerId}`;
 
   try {
     const result = await model.update(object, {
@@ -69,14 +62,31 @@ exports.findAll = async (model) => {
   }
 };
 
-exports.findOne = async (model, id) => {
+exports.findOneByPk = async (model, id) => {
   const logFilePath = path.join(__dirname, '../../../logs/dao.log');
 
-  const action = `findOne ${model.name} id=${id}`;
+  const action = `findOneByPk ${model.name} id=${id}`;
 
   try {
     const result = model.findByPk(id);
     logHandler.success(logFilePath, action);
+
+    return result;
+  } catch (e) {
+    logHandler.failure(logFilePath, action, e);
+    return e;
+  }
+};
+
+exports.findOneByWhere = async (model, where) => {
+  const logFilePath = path.join(__dirname, '../../../logs/dao.log');
+
+  const action = `findOneByPk ${model.name} where=${where}`;
+
+  try {
+    const result = model.findOne({ where });
+    logHandler.success(logFilePath, action);
+
     return result;
   } catch (e) {
     logHandler.failure(logFilePath, action, e);

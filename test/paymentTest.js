@@ -20,7 +20,7 @@ describe('Payment', () => {
       .set('content-type', 'application/json')
       .send(newPayment)
       .end((err, res) => {
-        id = res.body.data.paymentId;
+        id = res.body.paymentData.paymentId;
         res.should.have.status(201);
         done();
       });

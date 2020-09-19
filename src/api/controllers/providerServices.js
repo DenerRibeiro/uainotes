@@ -8,19 +8,38 @@ const errors = require('../../../helpers/errors/errorCodes');
 //@route    POST /api/v1/providers
 //@access   Private
 exports.createProvider = asyncHandler(async (req, res) => {
-  const obj = req.body;
+  const { name } = req.body;
 
-  const result = await generalDao.create(Providers, obj);
+  const find = await generalDao.findOneByWhere(Providers, { name });
+
+  if (find) {
+    throw new ErrorResponse(errors.PROVIDER_ALREADY_EXISTS);
+  }
+
+  const result = await generalDao.create(Providers, req.body);
+
   if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_CREATE_PROVIDER,
-    });
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PROVIDER);
+  }
+  if (result.name == 'SequelizeValidationError') {
     throw new ErrorResponse(errors.COULD_NOT_CREATE_PROVIDER, result);
   }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PROVIDER, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PROVIDER, result);
+  }
+
   res.status(201).json({
     success: true,
-    data: result,
+    providerData: {
+      name: result.dataValues.name,
+      address: result.dataValues.address,
+      providerId: result.dataValues.providerId,
+    },
   });
 });
 
@@ -30,17 +49,25 @@ exports.createProvider = asyncHandler(async (req, res) => {
 exports.updateProvider = asyncHandler(async (req, res) => {
   const { providerId } = req.params;
   const result = await generalDao.update(Providers, req.body, { providerId });
-  if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_UPDATE_PROVIDER,
-    });
+
+  if (!result[0]) {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PROVIDER, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
     throw new ErrorResponse(errors.COULD_NOT_UPDATE_PROVIDER, result);
   }
 
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PROVIDER, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PROVIDER, result);
+  }
+
+
   res.status(200).json({
     success: true,
-    data: result[0],
   });
 });
 
@@ -52,16 +79,23 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
   const result = await generalDao.delete(Providers, { providerId });
 
   if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_DELETE_PROVIDER,
-    });
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
     throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
   }
 
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
+  }
+
+
   res.status(200).json({
     success: true,
-    data: {},
   });
 });
 
@@ -71,16 +105,21 @@ exports.deleteProvider = asyncHandler(async (req, res) => {
 exports.findAllProviders = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Providers);
 
-  if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.NOT_FOUND,
-    });
-    throw new ErrorResponse(errors.NOT_FOUND, result);
+  const providerData = [];
+  result.forEach(element => {
+    providerData.push({ name: element.name, address: element.address, providerId: element.providerId });
+  });
+
+  if (!result || result.length === 0) {
+    throw new ErrorResponse(errors.PROVIDER_NOT_FOUND, result);
   }
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.PROVIDER_NOT_FOUND, result);
+  }
+
   res.status(200).json({
     success: true,
-    data: result,
+    providerData
   });
 });
 
@@ -89,18 +128,29 @@ exports.findAllProviders = asyncHandler(async (req, res) => {
 //@access   User
 exports.findOneProvider = asyncHandler(async (req, res) => {
   const { providerId } = req.params;
-  const result = await generalDao.findOne(Providers, providerId);
+  const result = await generalDao.findOneByPk(Providers, providerId);
 
   if (!result) {
-    res.status(404).json({
-      success: false,
-      error: errors.PROVIDER_NOT_FOUND,
-    });
     throw new ErrorResponse(errors.PROVIDER_NOT_FOUND, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PROVIDER, result);
   }
 
   res.status(200).json({
     success: true,
-    data: result,
+    providerData: {
+      name: result.dataValues.name,
+      address: result.dataValues.address,
+      providerId: result.dataValues.providerId,
+    }
   });
 });
