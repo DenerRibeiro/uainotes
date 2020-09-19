@@ -9,7 +9,7 @@ describe('Product', () => {
 
   it('Create Product', (done) => {
     const newProduct = {
-      name: `PRODUTO`,
+      name: `asddfasd`,
     };
     chai
       .request(server)
@@ -17,7 +17,7 @@ describe('Product', () => {
       .set('content-type', 'application/json')
       .send(newProduct)
       .end((err, res) => {
-        id = res.body.productId;
+        id = res.body.productData.productId;
         res.should.have.status(201);
         done();
       });

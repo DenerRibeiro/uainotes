@@ -8,23 +8,37 @@ const errors = require('../../../helpers/errors/errorCodes');
 //@route    POST /api/v1/product
 //@access   User
 exports.createProduct = asyncHandler(async (req, res) => {
-  const obj = req.body;
+  let { name } = req.body;
 
-  const result = await generalDao.create(Products, obj);
-  const { productId } = result.dataValues;
-  const { name } = result.dataValues;
+  const find = await generalDao.findOneByWhere(Products, { name });
+
+  if (find) {
+    throw new ErrorResponse(errors.PRODUCT_ALREADY_EXISTS);
+  }
+
+  const result = await generalDao.create(Products, req.body);
 
   if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_CREATE_PRODUCT,
-    });
     throw new ErrorResponse(errors.COULD_NOT_CREATE_PRODUCT, result);
   }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PRODUCT, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PRODUCT, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_CREATE_PRODUCT, result);
+  }
+
   res.status(201).json({
     success: true,
-    productId,
-    name,
+    productData: {
+      productId: result.dataValues.productId,
+      name: result.dataValues.name
+    }
   });
 });
 
@@ -35,23 +49,25 @@ exports.updateProduct = asyncHandler(async (req, res) => {
   let { productId } = req.params;
 
   const result = await generalDao.update(Products, req.body, { productId });
-  // console.log(result);
 
-  // productId = result[0].dataValues.productId;
-  // const { name } = result[0].dataValues;
+  if (!result[0]) {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PRODUCT, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PRODUCT, result);
+  }
 
-  if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_UPDATE_PRODUCT,
-    });
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_PRODUCT, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
     throw new ErrorResponse(errors.COULD_NOT_UPDATE_PRODUCT, result);
   }
 
   res.status(200).json({
-    success: true,
-    // productId,
-    // name,
+    success: true
+
   });
 });
 
@@ -63,36 +79,45 @@ exports.deleteProduct = asyncHandler(async (req, res) => {
   const result = await generalDao.delete(Products, { productId });
 
   if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.COULD_NOT_DELETE_PRODUCT,
-    });
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PRODUCT);
+  }
+  if (result.name == 'SequelizeValidationError') {
     throw new ErrorResponse(errors.COULD_NOT_DELETE_PRODUCT, result);
   }
 
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PRODUCT, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_PRODUCT, result);
+  }
+  
+
   res.status(200).json({
     success: true,
-    data: {},
+    productData: {},
   });
 });
 
 //@dec      Get all products
-//@route    GET /api/v1/products
+//@route    GET /products
 //@access   User
 exports.findAllProducts = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Products);
 
-  if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.NOT_FOUND,
-    });
-    throw new ErrorResponse(errors.NOT_FOUND, result);
+  if (!result || result.lengtn === 0) {
+    throw new ErrorResponse(errors.PRODUCT_NOT_FOUND);
   }
+
+  const productData = [];
+  result.forEach(element => {
+    productData.push({ name: element.name, productId: element.productId });
+  });
 
   res.status(200).json({
     success: true,
-    data: result,
+    productData
   });
 });
 
@@ -101,18 +126,25 @@ exports.findAllProducts = asyncHandler(async (req, res) => {
 //@access   User
 exports.findOneProduct = asyncHandler(async (req, res) => {
   const { productId } = req.params;
-  const result = await generalDao.findOne(Products, productId);
+  const result = await generalDao.findOneByPk(Products, productId);
 
   if (!result) {
-    res.status(404).json({
-      success: false,
-      data: errors.PRODUCT_NOT_FOUND,
-    });
+    throw new ErrorResponse(errors.PRODUCT_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.PRODUCT_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
     throw new ErrorResponse(errors.PRODUCT_NOT_FOUND, result);
   }
 
   res.status(200).json({
     success: true,
-    data: result,
+    productData: {
+      productId: result.dataValues.productId,
+      name: result.dataValues.name
+    },
   });
 });
