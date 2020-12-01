@@ -5,13 +5,17 @@ const {
   createLembrete, deleteLembrete, findAllLembretes, findOneLembrete, updateLembrete
 } = require('../controllers/lembretesServices');
 
+const {
+  verifyDataAtualDateTerminoLembrete, verifyDataAtualDeleteLembrete
+} = require('../middleware/verifyMiddleware')
 
-router.route('/').get(findAllLembretes).post(createLembrete);
+
+router.route('/').get(findAllLembretes).post(verifyDataAtualDateTerminoLembrete, createLembrete);
 
 router
   .route('/:lembreteId')
   .get(findOneLembrete)
   .put(updateLembrete)
-  .delete(deleteLembrete);
+  .delete(verifyDataAtualDeleteLembrete, deleteLembrete);
 
 module.exports = router;

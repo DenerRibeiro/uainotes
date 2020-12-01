@@ -6,17 +6,17 @@ const {
 } = require('../../api/controllers/tarefaServices');
 
 const {
-  verifyDataAtualDateTerminoTarefa,
+  verifyDataAtualDateTerminoTarefa, verifyDataAtualDeleteTarefa
 } = require('../../api/middleware/verifyMiddleware')
 
 
 
-router.route('/').get(findAllTarefas).post(verifyDataAtualDateTerminoTarefa, createTarefas);
+router.route('/').get(findAllTarefas).post(/*verifyDataAtualDateTerminoTarefa,*/ createTarefas);
 
 router
   .route('/:tarefaId')
   .get(findOneTarefas)
   .put(updateTarefas)
-  .delete(deleteTarefas);
+  .delete(verifyDataAtualDeleteTarefa, deleteTarefas);
 
 module.exports = router;

@@ -147,3 +147,36 @@ exports.findOneContato = asyncHandler(async (req, res) => {
     }
   });
 });
+
+exports.findOneContatoByName = asyncHandler(async (req, res) => {
+  const { nome } = req.body;
+
+  const result = await generalDao.findOneByWhere(Contatos, { nome });
+
+  if (!result) {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  res.status(200).json({
+    success: true,
+    providerData: {
+      contatoId: result.dataValues.contatoId,
+      nome: result.dataValues.nome,
+      email: result.dataValues.email,
+      endereco: result.dataValues.endereco,
+      telefone: result.dataValues.telefone,
+      celular: result.dataValues.celular,
+    }
+  });
+});

@@ -4,7 +4,6 @@ const ErrorResponse = require('../../../helpers/errors/ErrorResponse');
 const errors = require('../../../helpers/errors/errorCodes');
 const { Payment, Provider } = require('../../models');
 
-const getProviderByPayment = async () => {
-  const payments = await Provider.getPayments;
-  console.log(payments);
+const getContatoByName = async () => {
+
 };
