@@ -38,6 +38,32 @@ exports.creatContato = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.updateContato = asyncHandler(async (req, res) => {
+  let { contatoId } = req.params;
+
+  const result = await generalDao.update(Contatos, req.body, { contatoId });
+
+  if (!result[0]) {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+  }
+
+  res.status(200).json({
+    success: true
+
+  });
+});
+
 exports.findAllContatos = asyncHandler(async (req, res) => {
   const result = await generalDao.findAll(Contatos);
 
@@ -67,24 +93,57 @@ exports.findAllContatos = asyncHandler(async (req, res) => {
 exports.deleteContatos = asyncHandler(async (req, res) => {
   const { contatoId } = req.params;
   const result = await generalDao.delete(Contatos, { contatoId });
-
+  
   if (!result) {
     throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
   }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
+  }
 
-  if (result.name === 'SequelizeUniqueConstraintError') {
+  if (result.name == 'SequelizeUniqueConstraintError') {
     throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
   }
-  if (result.name === 'SequelizeForeignKeyConstraintError') {
+
+  if (result.name == 'SequelizeDatabaseError') {
     throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
   }
-  if (result.name === 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
-  }
-  if (result.name === 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_DELETE_CONTATO, result);
-  }
+
+
   res.status(200).json({
     success: true,
+  });
+});
+
+
+exports.findOneContato = asyncHandler(async (req, res) => {
+  const { contatoId } = req.params;
+  const result = await generalDao.findOneByPk(Contatos, contatoId);
+
+  if (!result) {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+  if (result.name == 'SequelizeValidationError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeUniqueConstraintError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  if (result.name == 'SequelizeDatabaseError') {
+    throw new ErrorResponse(errors.CONTATO_NOT_FOUND, result);
+  }
+
+  res.status(200).json({
+    success: true,
+    providerData: {
+      contatoId: result.dataValues.contatoId,
+      nome: result.dataValues.nome,
+      email: result.dataValues.email,
+      endereco: result.dataValues.endereco,
+      telefone: result.dataValues.telefone,
+      celular: result.dataValues.celular,
+    }
   });
 });
