@@ -10,8 +10,8 @@ const {
 } = require('../../api/controllers/providerServices');
 
 //Include other resource routers
-const paymentRouter = require('./payment');
-const productRouter = require('./product');
+// const paymentRouter = require('./payment');
+// const productRouter = require('./product');
 
 // //Re-route into other routes
 // router.use('/:id/payments', paymentRouter);
