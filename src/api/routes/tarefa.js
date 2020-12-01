@@ -5,9 +5,13 @@ const {
   createTarefas, deleteTarefas, findAllTarefas, findOneTarefas, updateTarefas
 } = require('../../api/controllers/tarefaServices');
 
+const {
+  verifyDataAtualDateTerminoTarefa,
+} = require('../../api/middleware/verifyMiddleware')
 
 
-router.route('/').get(findAllTarefas).post(createTarefas);
+
+router.route('/').get(findAllTarefas).post(verifyDataAtualDateTerminoTarefa, createTarefas);
 
 router
   .route('/:tarefaId')

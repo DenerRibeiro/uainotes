@@ -6,9 +6,10 @@ const errors = require('../../../helpers/errors/errorCodes');
 
 exports.createTarefas = asyncHandler(async (req, res) => {
 
+
   req.body.dataInicio = req.body.dataInicio.split('/').reverse().join('-');
   req.body.dataTermino = req.body.dataTermino.split('/').reverse().join('-');
-
+  
   const result = await generalDao.create(Tarefas, req.body);
 
 
