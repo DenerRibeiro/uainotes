@@ -7,6 +7,8 @@ const errors = require('../../../helpers/errors/errorCodes');
 
 exports.createLembrete = asyncHandler(async (req, res) => {
 
+  req.body.data = req.body.data.split('/').reverse().join('-');
+
   const result = await generalDao.create(Lembretes, req.body);
 
   if (!result) {
@@ -23,13 +25,13 @@ exports.createLembrete = asyncHandler(async (req, res) => {
   if (result.name == 'SequelizeDatabaseError') {
     throw new ErrorResponse(errors.COULD_NOT_CREATE_LEMBRETE, result);
   }
-
+  
   res.status(201).json({
     success: true,
     productData: {
       lembreteId: result.dataValues.lembreteId,
       contatoId: result.dataValues.contatoId,
-      data: result.dataValues.data,
+      data: result.dataValues.data.split('-').reverse().join('/'),
       hora: result.dataValues.hora,
       titulo: result.dataValues.titulo
     }
@@ -37,6 +39,8 @@ exports.createLembrete = asyncHandler(async (req, res) => {
 });
 
 exports.updateLembrete = asyncHandler(async (req, res) => {
+  req.body.data = req.body.data.split('/').reverse().join('-');
+
   let { lembreteId } = req.params;
 
   const result = await generalDao.update(Lembretes, req.body, { lembreteId });
@@ -97,6 +101,7 @@ exports.findAllLembretes = asyncHandler(async (req, res) => {
 
   const lembretesData = [];
   result.forEach(e => {
+    e.dataValues.data = e.dataValues.data.split('-').reverse().join('/');
     lembretesData.push({
       lembreteId: e.dataValues.lembreteId,
       contatoId: e.dataValues.contatoId,
@@ -132,7 +137,7 @@ exports.findOneLembrete = asyncHandler(async (req, res) => {
     success: true,
     lembretesData: {
       lembreteId: result.dataValues.productId,
-      data: result.dataValues.data,
+      data: result.dataValues.data.split('-').reverse().join('/'),
       hora: result.dataValues.hora,
       titulo: result.dataValues.titulo
     },

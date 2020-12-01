@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     email: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.STRING,
     },
     endereco: {
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     celular: {
-      allowNull: true,
+      allowNull: false,
       type: DataTypes.STRING,
     },
   });

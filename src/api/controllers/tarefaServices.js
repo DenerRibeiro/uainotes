@@ -6,6 +6,9 @@ const errors = require('../../../helpers/errors/errorCodes');
 
 exports.createTarefas = asyncHandler(async (req, res) => {
 
+  req.body.dataInicio = req.body.dataInicio.split('/').reverse().join('-');
+  req.body.dataTermino = req.body.dataTermino.split('/').reverse().join('-');
+
   const result = await generalDao.create(Tarefas, req.body);
 
 
@@ -30,8 +33,8 @@ exports.createTarefas = asyncHandler(async (req, res) => {
       tarefaId: result.dataValues.tarefaId,
       contatoId: result.dataValues.contatoId,
       categoriaId: result.dataValues.categoriaId,
-      dataInicio: result.dataValues.dataInicio,
-      dataTermino: result.dataValues.dataTermino,
+      dataInicio: result.dataValues.dataInicio.split('-').reverse().join('/'),
+      dataTermino: result.dataValues.dataTermino.split('-').reverse().join('/'),
       titulo: result.dataValues.titulo,
       descricao: result.dataValues.descricao,
       prioridade: result.dataValues.prioridade,
@@ -42,6 +45,11 @@ exports.createTarefas = asyncHandler(async (req, res) => {
 
 exports.updateTarefas = asyncHandler(async (req, res) => {
   const { tarefaId } = req.params;
+
+
+  req.body.dataInicio = req.body.dataInicio.split('/').reverse().join('-');
+  req.body.dataTermino = req.body.dataTermino.split('/').reverse().join('-');
+
   const result = await generalDao.update(Tarefas, req.body, { tarefaId });
 
   if (!result[0]) {
@@ -99,8 +107,8 @@ exports.findAllTarefas = asyncHandler(async (req, res) => {
       tarefaId: e.dataValues.tarefaId,
       contatoId: e.dataValues.contatoId,
       categoriaId: e.dataValues.categoriaId,
-      dataInicio: e.dataValues.dataInicio,
-      dataTermino: e.dataValues.dataTermino,
+      dataInicio: e.dataValues.dataInicio.split('-').reverse().join('/'),
+      dataTermino: e.dataValues.dataTermino.split('-').reverse().join('/'),
       titulo: e.dataValues.titulo,
       descricao: e.dataValues.descricao,
       prioridade: e.dataValues.prioridade,
@@ -142,12 +150,12 @@ exports.findOneTarefas = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    providerData: {
+    tarefaData: {
       tarefaId: result.dataValues.tarefaId,
       contatoId: result.dataValues.contatoId,
       categoriaId: result.dataValues.categoriaId,
-      dataInicio: result.dataValues.dataInicio,
-      dataTermino: result.dataValues.dataTermino,
+      dataInicio: result.dataValues.dataInicio.split('-').reverse().join('/'),
+      dataTermino: result.dataValues.dataTermino.split('-').reverse().join('/'),
       titulo: result.dataValues.titulo,
       descricao: result.dataValues.descricao,
       prioridade: result.dataValues.prioridade,
