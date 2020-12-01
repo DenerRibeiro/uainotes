@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
 //Get route files
-// const provider = require('./api/routes/provider');
+const categoria = require('./api/routes/categoria');
 const lembrete = require('./api/routes/lembrete');
 const contato = require('./api/routes/contato');
 
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //mount routes
-// app.use('/providers', provider);
+app.use('/categorias', categoria);
 app.use('/lembretes', lembrete);
 app.use('/contatos', contato);
 

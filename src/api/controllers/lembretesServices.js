@@ -62,9 +62,6 @@ exports.updateLembrete = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Delete a product
-//@route    DELETE /api/v1/products/:id
-//@access   User
 exports.deleteLembrete = asyncHandler(async (req, res) => {
   const { lembreteId } = req.params;
   const result = await generalDao.delete(Lembretes, { lembreteId });
@@ -115,9 +112,6 @@ exports.findAllLembretes = asyncHandler(async (req, res) => {
   });
 });
 
-//@dec      Get one  product
-//@route    GET /api/v1/products/:id
-//@access   User
 exports.findOneLembrete = asyncHandler(async (req, res) => {
   const { lembreteId } = req.params;
   const result = await generalDao.findOneByPk(Lembretes, lembreteId);
