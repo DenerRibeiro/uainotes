@@ -31,9 +31,9 @@ exports.creatContato = asyncHandler(async (req, res, next) => {
       contatoId: result.dataValues.contatoId,
       nome: result.dataValues.nome,
       email: result.dataValues.email,
-      endereco: e.dataValues.endereco,
-      telefone: e.dataValues.telefone,
-      celular: e.dataValues.celular,
+      endereco: result.dataValues.endereco,
+      telefone: result.dataValues.telefone,
+      celular: result.dataValues.celular,
     }
   });
 });

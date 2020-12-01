@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const categoria = require('./api/routes/categoria');
 const lembrete = require('./api/routes/lembrete');
 const contato = require('./api/routes/contato');
+const tarefa = require('./api/routes/tarefa');
 
 dotenv.config({ path: './api/config/config' });
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use('/categorias', categoria);
 app.use('/lembretes', lembrete);
 app.use('/contatos', contato);
+app.use('/tarefas', tarefa);
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!');
