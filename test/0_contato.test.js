@@ -56,6 +56,21 @@ describe('Contato', () => {
       });
   });
 
+  it('Busca contato por nome', (done) => {
+    contato = {
+      nome: "NovoContato"
+    }
+    chai
+      .request('localhost:3000')
+      .get('/contatos/find/nome')
+      .set('content-type', 'application/json')
+      .send(contato)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+
   it('Busca um contato', (done) => {
     chai
       .request('localhost:3000')
