@@ -11,7 +11,7 @@ const {
 
 
 
-router.route('/').get(findAllTarefas).post(/*verifyDataAtualDateTerminoTarefa,*/ createTarefas);
+router.route('/').get(findAllTarefas).post(verifyDataAtualDateTerminoTarefa, createTarefas);
 
 router
   .route('/:tarefaId')
