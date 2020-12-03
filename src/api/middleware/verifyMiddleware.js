@@ -15,7 +15,7 @@ exports.verifyDataAtualDateTerminoTarefa = asyncHandler(async (req, res, next) =
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   if (Date.parse(date) > Date.parse(data)) {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_TAREFA_DATA_TERMINO)
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_TAREFA_DATA_TERMINO)
   }
 
   next();
@@ -85,6 +85,6 @@ exports.verifyEmail = asyncHandler(async (req, res, next) => {
   }
   if (email && f) next();
   else if (email && !f)
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO);
   else next();
 });

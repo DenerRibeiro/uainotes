@@ -9,18 +9,18 @@ exports.createCategoria = asyncHandler(async (req, res) => {
   const result = await generalDao.create(Categorias, req.body);
 
   if (!result) {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CATEGORIA);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CATEGORIA);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CATEGORIA, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CATEGORIA, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CATEGORIA, result);
   }
 
   res.status(201).json({
@@ -38,18 +38,18 @@ exports.updateCategoria = asyncHandler(async (req, res) => {
   const result = await generalDao.update(Categorias, req.body, { categoriaId });
 
   if (!result[0]) {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CATEGORIA, result);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CATEGORIA, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CATEGORIA, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CATEGORIA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CATEGORIA, result);
   }
 
 

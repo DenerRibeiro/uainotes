@@ -14,18 +14,18 @@ exports.createTarefas = asyncHandler(async (req, res) => {
 
 
   if (!result) {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_TAREFA);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_TAREFA);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_TAREFA, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_TAREFA, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_TAREFA, result);
   }
 
   res.status(201).json({
@@ -54,18 +54,18 @@ exports.updateTarefas = asyncHandler(async (req, res) => {
   const result = await generalDao.update(Tarefas, req.body, { tarefaId });
 
   if (!result[0]) {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_TAREFA, result);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_TAREFA, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_TAREFA, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_TAREFA, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_TAREFA, result);
   }
 
 

@@ -10,19 +10,19 @@ exports.creatContato = asyncHandler(async (req, res, next) => {
   const result = await generalDao.create(Contatos, obj);
 
   if (!result) {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO, result);
   }
   if (result.name === 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO, result);
   }
   if (result.name === 'SequelizeForeignKeyConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO, result);
   }
   if (result.name === 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO, result);
   }
   if (result.name === 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_CONTATO, result);
   }
 
   res.status(201).json({
@@ -44,18 +44,18 @@ exports.updateContato = asyncHandler(async (req, res) => {
   const result = await generalDao.update(Contatos, req.body, { contatoId });
 
   if (!result[0]) {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CONTATO, result);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CONTATO, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CONTATO, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_CONTATO, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_CONTATO, result);
   }
 
   res.status(200).json({

@@ -46,18 +46,18 @@ exports.updateLembrete = asyncHandler(async (req, res) => {
   const result = await generalDao.update(Lembretes, req.body, { lembreteId });
 
   if (!result[0]) {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_LEMBRETE, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_LEMBRETE, result);
   }
   if (result.name == 'SequelizeValidationError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_LEMBRETE, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_LEMBRETE, result);
   }
 
   if (result.name == 'SequelizeUniqueConstraintError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_LEMBRETE, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_LEMBRETE, result);
   }
 
   if (result.name == 'SequelizeDatabaseError') {
-    throw new ErrorResponse(errors.COULD_NOT_UPDATE_LEMBRETE, result);
+    throw new ErrorResponse(errors.NAO_PODE_ALTERAR_LEMBRETE, result);
   }
 
   res.status(200).json({
