@@ -28,7 +28,7 @@ exports.createLembrete = asyncHandler(async (req, res) => {
   
   res.status(201).json({
     success: true,
-    productData: {
+    lembreteData: {
       lembreteId: result.dataValues.lembreteId,
       contatoId: result.dataValues.contatoId,
       data: result.dataValues.data.split('-').reverse().join('/'),
@@ -136,7 +136,7 @@ exports.findOneLembrete = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     lembretesData: {
-      lembreteId: result.dataValues.productId,
+      lembreteId: result.dataValues.lembreteId,
       data: result.dataValues.data.split('-').reverse().join('/'),
       hora: result.dataValues.hora,
       titulo: result.dataValues.titulo

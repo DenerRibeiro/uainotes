@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+require('dotenv').config({ path: `${__dirname}/../.env` });
 
 //Get route files
 const categoria = require('./api/routes/categoria');

@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     endereco: {
       allowNull: true,
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
     },
     telefone: {
       allowNull: true,
