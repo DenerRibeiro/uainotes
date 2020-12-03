@@ -4,6 +4,7 @@
   "description": "uai_services_api",
   "main": "index.js",
   "scripts": {
+    "test": "mocha", 
     "dev": "nodemon src/index.js",
     "db:migrations": "./node_modules/sequelize-auto-migrations/bin/makemigration.js"
   },

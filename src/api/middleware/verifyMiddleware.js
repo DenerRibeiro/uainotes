@@ -30,7 +30,7 @@ exports.verifyDataAtualDateTerminoLembrete = asyncHandler(async (req, res, next)
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   if (Date.parse(date) > Date.parse(data)) {
-    throw new ErrorResponse(errors.COULD_NOT_CREATE_LEMBRETE_DATA_TERMINO)
+    throw new ErrorResponse(errors.NAO_PODE_CRIAR_LEMBRETE_DATA_TERMINO)
   }
 
   next();
@@ -49,7 +49,7 @@ exports.verifyDataAtualDeleteTarefa = asyncHandler(async (req, res, next) => {
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   if (Date.parse(date) > Date.parse(data)) {
-    throw new ErrorResponse(errors.COULD_NOT_DELETE_TAREFA_DATA_TERMINO)
+    throw new ErrorResponse(errors.NAO_PODE_DELETAR_TAREFA_DATA_TERMINO)
   }
 
   next();
@@ -68,7 +68,7 @@ exports.verifyDataAtualDeleteLembrete = asyncHandler(async (req, res, next) => {
   const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   if (Date.parse(date) > Date.parse(data)) {
-    throw new ErrorResponse(errors.COULD_NOT_DELETE_LEMBRETE_DATA_TERMINO)
+    throw new ErrorResponse(errors.NAO_PODE_DELETAR_LEMBRETE_DATA_TERMINO)
   }
 
   next();

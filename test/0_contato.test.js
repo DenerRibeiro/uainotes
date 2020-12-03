@@ -26,6 +26,26 @@ describe('Contato', () => {
       });
   });
 
+  it('Adiciona contato / Verifica email', (done) => {
+    const newcontato = {
+      nome: "NovoContato",
+      email: "novocont",
+      endereco: "Ruanova",
+      telefone: "99999999",
+      celular: "99999999",
+    };
+    chai
+      .request('localhost:3000')
+      .post('/contatos')
+      .set('content-type', 'application/json')
+      .send(newcontato)
+      .end((err, res) => {
+        res.should.have.status(500);
+        res.body.error.message.should.be.equal('nao foi possivel adicionar contato');
+        done();
+      });
+  });
+
   it('Busca todos contatos', (done) => {
     chai
       .request('localhost:3000')
